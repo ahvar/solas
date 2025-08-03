@@ -1,0 +1,6 @@
+{
+    "black-formatter.interpreter": [
+        "/Users/arthurvargas/dev/solas/envs/bin/python"
+    ],
+    "python.defaultInterpreterPath": "/Users/arthurvargas/dev/solas/envs/bin/python"
+}
