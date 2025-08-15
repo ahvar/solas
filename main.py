@@ -1,7 +1,14 @@
 
-from flask import Flask
+from flask import Flask, render_template
+from datetime import datetime
 from datetime import date
+from converter.date_converter import DateConverter
+from views.certificates import show_honor_dissmisal
+from views import ListUnpaidContractView
 app = Flask(__name__)
+app.url_map.converters['date'] = DateConverter
+app.add_url_rule('/certificate/terminate/<string:counselor>/<date:effective_date>/<string:patient>', 'show_honor_dismissal', show_honor_dissmisal)
+app.add_url_rule('/contract/unpaid/patients', view_func=ListUnpaidContractView.as_view('list-unpaid-view'))
 
 @app.route('/', methods = ['GET'])
 def index():
