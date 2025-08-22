@@ -1,6 +1,7 @@
 from __main__ import app
-from flask import render_template, request
+from flask import render_template, request, Response
 from model.candidates import AdminUser, CounselorUser, PatientUser
+from repository.signup import select_all_signup
 from urllib.parse import parse_qsl
 
 @app.route('/signup/approve', methods=['POST'])
@@ -27,3 +28,13 @@ def signup_approve(utype:int=None):
             pat_model = PatientUser(**pat_dict)
             user_approval_service(utype, pat_model)
         return render_template('approved_user.html', message='approved'), 200
+    
+@app.route('/signup/form', methods=['GET'])
+def signup_users_form():
+    resp = Response( response=render_template('add_signup.html'), status=200, content_type='text/html')
+    return resp
+
+@app.route('/signup/list', methods=['GET'])
+def signup_list_users():
+    candidates = select_all_signup()
+    return render_template('reports/list_candidates.html', records=candidates), 200 
